@@ -10,4 +10,12 @@ namespace Users_Api.Resources
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
+
+    public class UserWithTokenResource
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public string Token { get; set; }
+    }
 }

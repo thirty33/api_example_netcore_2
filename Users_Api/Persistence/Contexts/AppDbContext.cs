@@ -78,7 +78,7 @@ namespace Users_Api.Persistence.Contexts
             builder.Entity<User>().Property(p => p.Password).IsRequired().HasMaxLength(20);
             builder.Entity<User>().Property(p => p.Token);
 
-            //User table data
+            //User table data   
             builder.Entity<User>().HasData
             (
                 new User
