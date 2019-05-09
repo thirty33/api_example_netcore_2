@@ -19,5 +19,12 @@ namespace Users_Api.Persistence.Repositories
         {
             return await _context.Users.ToListAsync();
         }
+
+        //Find a User Item into DB
+        public async Task<User> FindByUserAndPassword(string _userName, string _password)
+        {
+            return await _context.Users.FirstOrDefaultAsync(i => i.Username == _userName && i.Password == _password);
+        }
+
     }
 }

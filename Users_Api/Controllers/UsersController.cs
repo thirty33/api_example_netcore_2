@@ -27,14 +27,15 @@ namespace Users_Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]User userParam)
+        public async Task<IActionResult> Authenticate([FromBody]User userParam)
         {
-            var user = _userService.Authenticate(userParam.Username, userParam.Password);
+            var user = await _userService.Authenticate(userParam.Username, userParam.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            return Ok(user);
+            var userResource = _mapper.Map<User, UserWithTokenResource>(user);
+            return Ok(userResource);
         }
 
 
