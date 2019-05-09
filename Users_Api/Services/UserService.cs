@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Users_Api.Domain.Repositories;
 using Users_Api.Domain.Services;
 using Users_Api.Helpers;
 using Users_Api.Models;
@@ -21,6 +22,9 @@ namespace Users_Api.Services
             new User { Id = 1, FirstName = "Joel", LastName = "Suarez", Username = "joel", Password = "admin" },
             new User { Id = 2, FirstName = "Carlos", LastName = "Torrealba", Username = "carl", Password = "admin" },
         };
+
+        //Dependency Injection Implementation
+        private readonly IUserRepository _userRepository;
 
         public UserService(IOptions<AppSettings> appSettings)
         {
@@ -58,14 +62,21 @@ namespace Users_Api.Services
             return user;
         }
 
-        public IEnumerable<User> GetAll()
+        //Local Implementation
+        //public IEnumerable<User> GetAll()
+        //{
+        //    // return users without passwords
+        //    return _users.Select(x =>
+        //    {
+        //        x.Password = null;
+        //        return x;
+        //    });
+        //}
+
+        //Dependency injection Implementation
+        public async Task<IEnumerable<User>> ListAsync()
         {
-            // return users without passwords
-            return _users.Select(x =>
-            {
-                x.Password = null;
-                return x;
-            });
+            return await _userRepository.ListAsync();
         }
     }
     }

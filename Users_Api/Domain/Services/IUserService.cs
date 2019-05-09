@@ -9,6 +9,9 @@ namespace Users_Api.Domain.Services
     public interface IUserService
     {
         User Authenticate(string username, string password);
-        IEnumerable<User> GetAll();
+        //IEnumerable<User> GetAll();
+
+        //Jwt part2
+        Task<IEnumerable<User>> ListAsync();
     }
 }

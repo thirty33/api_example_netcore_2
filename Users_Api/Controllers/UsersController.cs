@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Users_Api.Services;
 using Users_Api.Models;
 using Users_Api.Domain.Services;
+using AutoMapper;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Users_Api.Controllers
 {
@@ -13,6 +16,7 @@ namespace Users_Api.Controllers
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
+        private readonly IMapper _mapper;
 
         public UsersController(IUserService userService)
         {
@@ -32,11 +36,23 @@ namespace Users_Api.Controllers
         }
 
 
+        //Jwt primary implementation
+        //[HttpGet]
+        //public IActionResult GetAll()
+        //{
+        //    var users = _userService.GetAll();
+        //    return Ok(users);
+        //}
+
+
+        //Jwt with dependency injection implementation
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            var users = _userService.GetAll();
-            return Ok(users);
+            var users = await _userService.ListAsync();
+            //var resources = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductResource>>(products);
+            var resources = _mapper.Map<IEnumerable<User>>(users);
+            return resources;
         }
     }
 }

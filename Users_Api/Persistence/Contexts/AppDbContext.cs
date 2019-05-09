@@ -12,6 +12,7 @@ namespace Users_Api.Persistence.Contexts
         //Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -67,6 +68,36 @@ namespace Users_Api.Persistence.Contexts
             //   .HasMany(p => p.Products)
             //   .WithOne(p => p.Category)
             //   .HasForeignKey(p => p.CategoryId);
+
+            //User table specifications
+            builder.Entity<User>().ToTable("Users");
+            builder.Entity<User>().HasKey(p => p.Id);
+            builder.Entity<User>().Property(p => p.FirstName).IsRequired().HasMaxLength(30);
+            builder.Entity<User>().Property(p => p.LastName).IsRequired().HasMaxLength(30);
+            builder.Entity<User>().Property(p => p.Username).IsRequired().HasMaxLength(10);
+            builder.Entity<User>().Property(p => p.Password).IsRequired().HasMaxLength(20);
+            builder.Entity<User>().Property(p => p.Token);
+
+            //User table data
+            builder.Entity<User>().HasData
+            (
+                new User
+                {
+                    Id = 01,
+                    FirstName = "Joel",
+                    LastName = "Suarez",
+                    Username = "joel",
+                    Password = "joel"
+                },
+                new User
+                {
+                    Id = 02,
+                    FirstName = "Gustavo",
+                    LastName = "Suarez",
+                    Username = "gustavo",
+                    Password = "gustavo"
+                }
+            );
         }
     }
 }
