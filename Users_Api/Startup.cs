@@ -53,17 +53,19 @@ namespace Users_Api
             services.AddScoped<IProductRepository, ProductRepository>();
             //Unit of work Scoped
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
+
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService>();
+
 
             //services.Configure<IISServerOptions>(options =>
             //{
             //    options.AutomaticAuthentication = false;
             //});
-
-            // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
 
             services.AddAutoMapper(typeof(Startup));
         }

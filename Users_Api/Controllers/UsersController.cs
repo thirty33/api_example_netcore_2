@@ -7,6 +7,7 @@ using Users_Api.Domain.Services;
 using AutoMapper;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Users_Api.Resources;
 
 namespace Users_Api.Controllers
 {
@@ -18,9 +19,10 @@ namespace Users_Api.Controllers
         private IUserService _userService;
         private readonly IMapper _mapper;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -46,12 +48,13 @@ namespace Users_Api.Controllers
 
 
         //Jwt with dependency injection implementation
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<UserResource>> GetAll()
         {
             var users = await _userService.ListAsync();
-            //var resources = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductResource>>(products);
-            var resources = _mapper.Map<IEnumerable<User>>(users);
+            var resources = _mapper.Map<IEnumerable<User>, IEnumerable<UserResource>>(users);
+            //var resources = _mapper.Map<IEnumerable<User>>(users);
             return resources;
         }
     }

@@ -26,9 +26,10 @@ namespace Users_Api.Services
         //Dependency Injection Implementation
         private readonly IUserRepository _userRepository;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<AppSettings> appSettings, IUserRepository userRepository)
         {
             _appSettings = appSettings.Value;
+            _userRepository = userRepository;
         }
 
         public User Authenticate(string username, string password)
